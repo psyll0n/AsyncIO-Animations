@@ -10,7 +10,7 @@ body {
 
 .container {
   display: flex;
-  padding: 10px;
+  padding: 10px 10px 125px 10px;
   gap: 10px;
   background-color: #242424;
   min-height: 100vh;
@@ -227,5 +227,551 @@ code {
   }
   100% {
     transform: rotate(360deg) skew(1deg, 1deg);
+  }
+}
+
+/* ==========================================================================
+   INTERACTIVE UI CHROME (Top Bar, Step Explainer, Control HUD, Modal)
+   ========================================================================== */
+
+/* Top Navigation Bar */
+#app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(22, 22, 26, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.topbar-left,
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-center {
+  text-align: center;
+}
+
+.topbar-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: -0.01em;
+}
+
+.topbar-subtitle {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  display: block;
+  margin-top: 1px;
+}
+
+.topbar-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.topbar-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.topbar-btn,
+.topbar-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  background: #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.topbar-btn:hover,
+.topbar-nav-btn:hover {
+  background: #3f3f46;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.topbar-nav-btn.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.help-btn {
+  background: rgba(129, 212, 250, 0.1);
+  border-color: rgba(129, 212, 250, 0.25);
+  color: #81d4fa;
+}
+
+.help-btn:hover {
+  background: rgba(129, 212, 250, 0.2);
+}
+
+/* Step Explainer Banner */
+.step-explainer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 10px 0 10px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #2a2a2e;
+  border: 1px solid #444;
+  border-left: 4px solid #81d4fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.step-explainer.ready {
+  border-left-color: #94a3b8;
+}
+
+.step-explainer.loop {
+  border-left-color: #38bdf8;
+}
+
+.step-explainer.yield {
+  border-left-color: #fb923c;
+}
+
+.step-explainer.blocking {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.step-explainer.blocking .explainer-title {
+  color: #ef4444 !important;
+}
+
+.step-explainer.threadpool {
+  border-left-color: #a78bfa;
+}
+
+.step-explainer.process {
+  border-left-color: #c084fc;
+}
+
+.step-explainer.structured {
+  border-left-color: #60a5fa;
+}
+
+.step-explainer.gather {
+  border-left-color: #22d3ee;
+}
+
+.step-explainer.io {
+  border-left-color: #f472b6;
+}
+
+.step-explainer.complete {
+  border-left-color: #34d399;
+}
+
+.step-explainer.done {
+  border-left-color: #10b981;
+}
+
+.explainer-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.explainer-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.explainer-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 2px;
+}
+
+.explainer-text {
+  font-size: 0.86rem;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
+.explainer-text code {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.82rem;
+  color: #fed7aa;
+}
+
+.explainer-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: monospace;
+  padding: 3px 9px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+/* Floating Control HUD Dock */
+#app-dock {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 860px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(20, 20, 24, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Timeline Scrubber */
+.hud-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hud-timeline-track {
+  position: relative;
+  width: 100%;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hud-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+  border-radius: 4px;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+.hud-slider {
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 100%;
+  height: 19px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  margin: 0;
+}
+
+.hud-timeline-track:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.hud-timeline-track:hover .hud-slider {
+  opacity: 1;
+  accent-color: #38bdf8;
+}
+
+.hud-timeline-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hud-counter {
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: monospace;
+  color: #94a3b8;
+}
+
+.hud-legend-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 10px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.chip-ready {
+  background: rgba(70, 130, 180, 0.25);
+  border: 1px solid steelblue;
+  color: #93c5fd;
+}
+
+.chip-running {
+  background: rgba(56, 189, 248, 0.25);
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+}
+
+.chip-suspended {
+  background: rgba(198, 95, 70, 0.25);
+  border: 1px solid #c65f46;
+  color: #fdba74;
+}
+
+.chip-complete {
+  background: rgba(46, 139, 87, 0.25);
+  border: 1px solid seagreen;
+  color: #86efac;
+}
+
+.chip-io {
+  background: rgba(107, 58, 80, 0.4);
+  border: 1px solid #a855f7;
+  color: #f0abfc;
+}
+
+/* Controls Row */
+.hud-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hud-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 13px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #f1f5f9;
+  background: #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.hud-btn:hover:not(:disabled) {
+  background: #3f3f46;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.hud-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.hud-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hud-btn-primary {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+  font-weight: 600;
+  min-width: 90px;
+}
+
+.hud-btn-primary:hover:not(:disabled) {
+  background: #0369a1;
+  border-color: #7dd3fc;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+}
+
+.hud-btn-primary.playing {
+  background: #ea580c;
+  border-color: #fb923c;
+  box-shadow: 0 0 12px rgba(234, 88, 12, 0.4);
+}
+
+.hud-btn-primary.playing:hover:not(:disabled) {
+  background: #c2410c;
+}
+
+/* Speed Selector */
+.hud-speed-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.speed-label {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-right: 4px;
+}
+
+.speed-btn {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.speed-btn:hover {
+  background: #27272a;
+  color: #ffffff;
+}
+
+.speed-btn.active {
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #0f172a;
+}
+
+/* Shortcuts Modal */
+.shortcuts-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.shortcuts-modal.open {
+  display: flex;
+}
+
+.shortcuts-card {
+  background: #1e1e24;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 22px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  animation: slideInFromLeft 0.2s ease-out;
+}
+
+.shortcuts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.shortcuts-header h3 {
+  font-size: 1.1rem;
+  color: #f1f5f9;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #94a3b8;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: #ffffff;
+}
+
+.shortcuts-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: monospace;
+  color: #f8fafc;
+  background: #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  #app-topbar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+  }
+  .hud-legend-chips {
+    display: none;
+  }
+  .hud-btn .btn-text {
+    display: none;
+  }
+  .container {
+    flex-direction: column;
+    padding-bottom: 160px;
   }
 }
